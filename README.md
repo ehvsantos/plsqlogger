@@ -1,5 +1,5 @@
 # plsqlogger
-Generate SQL Strings for logs and use the tool for replacing the object variables values
+Generator of SQL strings for logs and tool for auto-replacement of variables values
 
 ## Install dependencies 
 
