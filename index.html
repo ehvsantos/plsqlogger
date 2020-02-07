@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>PL/SQLogger</title>
+</head>
+
+<body>
+  <div class="row">
+    <div class="offset-md-2 col-md-12">
+        <h1>PL/SQLogger <span class="badge badge-secondary">New</span></h1>
+        <h5>Generate SQL Strings for your logs using JSON key value pairs</h5>
+		<nav class="nav">
+			<a class="nav-link active" href="#">PL/SQLogger</a>
+			<a class="nav-link" href="sqlog_generator.html">Generator</a>
+			<a class="nav-link" href="sqlog_replacer.html">Replacer</a>
+		</nav>
+	</div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="offset-md-2 col-md-8">
+		<div class="col-md-12">
+			<h2>PL/SQLogger <span class="badge badge-secondary">New</span></h2>
+			<h5>Generate logs for you SQL code, simulate and fastly replace variables for test!</h5>
+		</div>
+		<h5> Set the log </h5>
+		<ul>
+			<li> Go to the Generator </li>
+			<li> Copy your code and paste it into the SQL Input field</li>
+			<li> Use the 'Search for prefix/sufix' to look for the variables in the code clicking 'Scan'</li>
+			<li> Scan and choose the desired variables in the multi-select then click Generate. </li>
+			<li> Apply the generated string to this code snippet:</li>
+			<textarea cols='80' rows='4'>
+if (nm_usuario_p = 'youruser') then
+	gravar_log_tasy(33333, *PASTE THE GENERATED STRING HERE*
+	,nm_usuario_p);
+end if;
+			</textarea>
+			<ul>
+				<li> Tip 1: change 33333 for a 5 digit specific choosen log code for tracking your log</li>
+				<li> Tip 2: change 'TasyUsernameHere' for a valid username</li>
+			</ul>
+			<li> Apply the log snippet to your object. </li>
+			<li> Simulate your case... </li>
+		</ul>
+		<h5> Get the logs by its code </h5>
+		<ul>
+			<li> Get your log records:</li>
+			
+			<textarea cols='80' rows='4'>
+select * 
+from log_tasy
+where cd_log = :cd_log
+and nm_usuario = :nm_usuario_p
+and dt_atualizacao between sysdate-1 and sysdate;
+			</textarea>
+		</ul>
+		<h5> Save your logs (Optional) </h5>
+		<ul>
+			<li> Save your logs to use the field ds_log: </li>
+			<ul>
+				<li> Tip: Use JSON file type</li>
+			</ul>
+			<li> Open it with a text editor </li>
+			<li> Use the field ds_log for the next step...</li>
+			<ul>
+				<li> Tip: Format the JSON with VSCode or https://jsonformatter.curiousconcept.com/ </li>
+			</ul>
+		</ul>
+		<h5> Replace your SQL variables by its JSON key value pairs</h5>
+		<ul>
+			<li> Go to the Replacer </li>
+			<li> Copy the field ds_log from a record </li>
+			<li> Paste it into the field JSON Input</li>
+			<li> Be sure the SQL you get the variables is into the SQL Input field </li>
+			<li> Click replace</li>
+			<li> Use code generated in the SQL Output field to see what's happening :)</li>
+		</ul>
+	</div>
+  </div>
+  <div class='row'>
+        <div class="offset-md-6 col-md-3">By: Eduardo Henrique Vieira dos Santos</div>
+        <div class="col-md-3">@ehvsantos</div>
+  </div>
+  <hr>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>PL/SQLogger</title>
+</head>
+
+<body>
+  <div class="row">
+    <div class="offset-md-2 col-md-12">
+        <h1>PL/SQLogger <span class="badge badge-secondary">New</span></h1>
+        <h5>Replace your SQL variables by its JSON key value pairs</h5>
+		<nav class="nav">
+			<a class="nav-link active" href="index.html">PL/SQLogger</a>
+			<a class="nav-link" href="sqlog_generator.html" onclick="$('#sqlInput').val() ? setCookie('sqlInput='+encodeURI($('#sqlInput').val())):'#'">Generator</a>
+			<a class="nav-link active" href="#">Replacer</a>
+		</nav>
+	</div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="offset-md-2 col-md-8">
+      <form class="form-inline" action="#">
+        <div class="form-group col-md-6">
+          <label for="sqlInput">SQL Input</label>
+          <textarea class="form-control" id="sqlInput" rows="5" cols="100%"
+            placeholder="Put your SQL here..."></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="JSONInput">JSON Input</label>
+          <textarea class="form-control" id="JSONInput" rows="5" cols="100%"
+            placeholder="Put your JSON here then click Replace!"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="sqlOutput">SQL Output</label>
+          <textarea class="form-control" id="sqlOutput" rows="5" cols="100%"
+            placeholder="Here is your SQL with all of the courrencies of each key replaced by its value.."></textarea>
+        </div>
+        <div class="offset-md-2 col-md-4 btn btn-success" onclick="replaceVars()">Replace</div>
+      </form>
+    </div>
+  </div>
+  <div class='row'>
+        <div class="offset-md-6 col-md-3">By: Eduardo Henrique Vieira dos Santos</div>
+        <div class="col-md-3">@ehvsantos</div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="js/funcoes_replacer.js"></script>
+</body>
+
+</html>

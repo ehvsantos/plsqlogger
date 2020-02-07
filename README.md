@@ -1,2 +1,12 @@
 # plsqlogger
 Generate SQL Strings for logs and use the tool for replacing the object variables values
+
+Install dependencies 'connect' and 'serve-static' with NPM:
+
+    $ npm install connect serve-static
+
+Run with Node:
+
+    $ node server.js
+
+You can now go to http://localhost:5353/index.html
