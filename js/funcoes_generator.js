@@ -6,18 +6,19 @@ function clearVars() {
   $('#sqlVariables option').remove('');
 }
 
-function removeComments(str) { ;
+function removeComments(str) {
+  ;
   s = '';
   codeComment = null
   for (let i = 0; i <= str.length; i++) {
-    if (i+1 < str.length) {
-      if (str[i]+str[i+1] === '/*') {
+    if (i + 1 < str.length) {
+      if (str[i] + str[i + 1] === '/*') {
         codeComment = '/*';
-      } else if (str[i]+str[i+1] === '--') {
+      } else if (str[i] + str[i + 1] === '--') {
         codeComment = '--';
-      } else if (codeComment == '/*' && str[i-1]+str[i] == '*/') {
+      } else if (codeComment == '/*' && str[i - 1] + str[i] == '*/') {
         codeComment = null;
-      } else if (codeComment == '--' && str[i-1] == '\n') {
+      } else if (codeComment == '--' && str[i - 1] == '\n') {
         codeComment = null;
       }
       if (!codeComment) {
@@ -25,7 +26,7 @@ function removeComments(str) { ;
       }
     }
   }
-  s += str[str.length-1];
+  s += str[str.length - 1];
   return s;
 }
 
@@ -61,7 +62,7 @@ function scan(str, filterSide, search) {
     }
   }
   for (let i = 0; i < sqlVars.length; i++) {
-    if(!sqlVars[i].startsWith('.')){
+    if (!sqlVars[i].startsWith('.') && sqlVars[i].length > 3) {
       $('#sqlVariables').append('<option value=\'' + sqlVars[i] + '\'>' + sqlVars[i] + '</option>');
     }
   }
@@ -76,8 +77,8 @@ function generate() {
   variables.sort()
   for (let i = 0; i < variables.length; i++) {
     var variable = ''
-    if (variables[i].startsWith('dt_')){
-      variable = "to_char("+variables[i]+", 'dd/mm/yyyy hh24:mi:ss')";
+    if (variables[i].startsWith('dt_')) {
+      variable = "to_char(" + variables[i] + ", 'dd/mm/yyyy hh24:mi:ss')";
     } else {
       variable = variables[i];
     }
@@ -91,7 +92,7 @@ function generate() {
   $('#log_string').val(logString);
 }
 
-function btnScan()  {
+function btnScan() {
   var str = $('#sqlInput').val();
   var filterSide = $('#filterSide:checked').val();
   var search = $('#searchFor').val();
@@ -101,12 +102,12 @@ function btnScan()  {
     let str_aux = '';
     for (let i = 0; i < 20; i++) {
       str_aux += 'p'
-      scan(str, filterSide, search+str_aux);
+      scan(str, filterSide, search + str_aux);
     }
     str_aux = '';
     for (let i = 0; i < 20; i++) {
       str_aux += 'w'
-      scan(str, filterSide, search+str_aux);
+      scan(str, filterSide, search + str_aux);
     }
     filterSide = 'starts'
     search = 'get';
@@ -119,17 +120,17 @@ function btnScan()  {
   }
 }
 
-function setCookie(str)  {
+function setCookie(str) {
   document.cookie = '';
   document.cookie = str;
 }
 
-function getCookie()  {
+function getCookie() {
   return document.cookie
 }
 
 function checkAllVars() {
-  $('#sqlVariables').find('option').attr("selected","true");
+  $('#sqlVariables').find('option').attr("selected", "true");
 }
 
 /*
@@ -141,18 +142,18 @@ if (urlGetInput) {
   $('#sqlInput').val(decodeURI(urlGetInput));
 }*/
 
-$('#searchFor').keyup(function(e){ 
-  var code = e.which; 
-  if(code==13)e.preventDefault();
-  if(code==32||code==13||code==188||code==186){
+$('#searchFor').keyup(function (e) {
+  var code = e.which;
+  if (code == 13) e.preventDefault();
+  if (code == 32 || code == 13 || code == 188 || code == 186) {
     btnScan();
   }
   checkAllVars();
   generate();
 });
 /*
-$('#sqlInput').keydown(function(e){ 
-  var code = e.which; 
+$('#sqlInput').keydown(function(e){
+  var code = e.which;
   if(code==13)e.preventDefault();
   if(code==32||code==13||code==188||code==186){
     btnScan();
