@@ -77,7 +77,7 @@ function generate() {
   variables.sort()
   for (let i = 0; i < variables.length; i++) {
     var variable = ''
-    if (variables[i].startsWith('dt_')) {
+    if (variables[i].startsWith('dt_') || variables[i].startsWith('sysdate')) {
       variable = "to_char(" + variables[i] + ", 'dd/mm/yyyy hh24:mi:ss')";
     } else {
       variable = variables[i];
@@ -114,6 +114,8 @@ function btnScan() {
     scan(str, filterSide, search);
     filterSide = 'starts'
     search = ':';
+    scan(str, filterSide, search);
+    search = 'sysdate';
     scan(str, filterSide, search);
   } else {
     scan(str, filterSide, search);

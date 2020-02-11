@@ -38,7 +38,7 @@ function replaceVars() {
       value = replaceAll(value, "'", '')
       value = '0' + replaceAll(value, ',', '.');
     }
-    if (key.startsWith('dt_')) {
+    if (key.startsWith('dt_') || key.startsWith('sysdate')) {
       value = "to_date(" + value + ", 'dd/mm/yyyy hh24:mi:ss')";
     }
     if (!outputIsEmpty) {
