@@ -1,0 +1,24 @@
+{
+  "name": "plsqlogger",
+  "description": "Generate SQL Strings for logs and use the tool for replacing the object variables values",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ehvsantos/plsqlogger"
+  },
+  "keywords": [],
+  "author": "ehvsantos,edvieira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ehvsantos/plsqlogger"
+  },
+  "homepage": "https://github.com/ehvsantos/plsqlogger",
+  "dependencies": {
+    "connect": "^3.0.0",
+    "serve-static": "^1.1.0"
+  }
+}
