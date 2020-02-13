@@ -74,7 +74,7 @@ function replaceVars() {
       }
       if (!outputIsEmpty) {
         logOutputN = replaceAll(sqlInput, key, value);
-        logOutputN = '/*####### LOG_ID:' + logIndex + '\n\n' + JSON.stringify(logJSON) + '\n*/\n\n' + logOutputN;
+        logOutputN = '/*####### LOG_ID:' + logIndex + '\n\n' + JSON.stringify(logJSON) + '\n\n*/\n\n' + logOutputN;
         outputIsEmpty++;
       } else {
         logOutputN = replaceAll(logOutputN, key, value);
