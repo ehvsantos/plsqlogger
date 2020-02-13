@@ -6,8 +6,38 @@ function clearVars() {
   $('#sqlVariables option').remove('');
 }
 
-function remove_first_and_last(str) {
-  return str.substr(1, str.length - 2)
+function prepareMassReplace(str) {
+  try {
+    JSON.parse(str);
+    return str;
+  } catch (error) {
+    if (str.startsWith('"\{')) {
+      str = str.substr(1, str.length - 1);
+    }
+    if (str.endsWith('\}"')) {
+      str = str.substr(0, str.length - 2);
+    }
+    str = str;
+    str_ = str.split('');
+    outstr = '';
+    openBracket = false;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] == '{') {
+        openBracket = true;
+      }
+      if (str[i] == '}') {
+        openBracket = false;
+        outstr += str[i];
+        outstr += ',\n';
+        continue;
+      }
+      if (openBracket) {
+        outstr += str[i];
+      }
+    }
+    outstr = '[' + outstr + '}]';
+    return outstr;
+  }
 }
 
 function replaceVars() {
@@ -18,35 +48,39 @@ function replaceVars() {
   jsInput = replaceAll(jsInput, '\\"', '"');
   jsInput = replaceAll(jsInput, '\n', ' ');
   jsInput = replaceAll(jsInput, '","', '",\n"');
-  if (jsInput.startsWith('"\{') && jsInput.endsWith('\}"')) {
-    jsInput = remove_first_and_last(jsInput);
-  }
+  jsInput = prepareMassReplace(jsInput);
   $('#JSONInput').val(jsInput);
   try {
     jsInput = JSON.parse(jsInput);
   } catch (err) {
     alert('Your JSON is invalid! Check its value at : ' + err.message);
   }
-  var outputIsEmpty = 0;
-  for (key in jsInput) {
-    if (jsInput[key] == "") {
-      jsInput[key] = "''";
+  for (logIndex in jsInput) {
+    logJSON = jsInput[logIndex];
+    logOutputN = '';
+    var outputIsEmpty = 0;
+    for (key in logJSON) {
+      if (logJSON[key] == "") {
+        logJSON[key] = "''";
+      }
+      var value;
+      value = isNaN(logJSON[key]) ? logJSON[key] == "''" ? logJSON[key] : "'" + logJSON[key] + "'" : logJSON[key];
+      if (value.startsWith("',")) {
+        value = replaceAll(value, "'", '')
+        value = '0' + replaceAll(value, ',', '.');
+      }
+      if (key.startsWith('dt_') || key.startsWith('sysdate')) {
+        value = "to_date(" + value + ", 'dd/mm/yyyy hh24:mi:ss')";
+      }
+      if (!outputIsEmpty) {
+        logOutputN = replaceAll(sqlInput, key, value);
+        logOutputN = '/*####### LOG_ID:' + logIndex + '\n\n' + JSON.stringify(logJSON) + '\n*/\n\n' + logOutputN;
+        outputIsEmpty++;
+      } else {
+        logOutputN = replaceAll(logOutputN, key, value);
+      }
     }
-    var value;
-    value = isNaN(jsInput[key]) ? jsInput[key] == "''" ? jsInput[key] : "'" + jsInput[key] + "'" : jsInput[key];
-    if (value.startsWith("',")) {
-      value = replaceAll(value, "'", '')
-      value = '0' + replaceAll(value, ',', '.');
-    }
-    if (key.startsWith('dt_') || key.startsWith('sysdate')) {
-      value = "to_date(" + value + ", 'dd/mm/yyyy hh24:mi:ss')";
-    }
-    if (!outputIsEmpty) {
-      sqlOutput = replaceAll(sqlInput, key, value);
-      outputIsEmpty++;
-    } else {
-      sqlOutput = replaceAll(sqlOutput, key, value);
-    }
+    sqlOutput += logOutputN + (jsInput.length-1 == logIndex? '':'\n\n\n\n\n\n');
   }
   $('#sqlOutput').val(sqlOutput);
 }
