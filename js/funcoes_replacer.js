@@ -74,12 +74,13 @@ function replaceVars() {
       }
       if (!outputIsEmpty) {
         logOutputN = replaceAll(sqlInput, key, value);
-        logOutputN = '/*####### LOG_ID:' + logIndex + '\n\n' + JSON.stringify(logJSON) + '\n\n*/\n\n' + logOutputN;
         outputIsEmpty++;
       } else {
         logOutputN = replaceAll(logOutputN, key, value);
       }
     }
+    var strgfy = replaceAll(JSON.stringify(logJSON), '","', '",\n"');
+    logOutputN = '/*####### __LOG__:' + logIndex + '\n\n' + strgfy + '\n\n*/\n\n' + logOutputN;
     sqlOutput += logOutputN + (jsInput.length-1 == logIndex? '':'\n\n\n\n\n\n');
   }
   $('#sqlOutput').val(sqlOutput);
