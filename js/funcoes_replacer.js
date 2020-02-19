@@ -9,6 +9,12 @@ function clearVars() {
 function prepareMassReplace(str) {
   try {
     JSON.parse(str);
+    if (str.startsWith('{')) {
+      str = '['+str;
+    }
+    if (str.endsWith('}')) {
+      str = str+']';
+    }
     return str;
   } catch (error) {
     if (str.startsWith('"\{')) {
